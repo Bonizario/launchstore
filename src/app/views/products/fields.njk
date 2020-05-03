@@ -1,0 +1,145 @@
+<div class="item">
+  <div>Catégorie</div>
+  <div>
+    <select class="box-shadow" name="category_id">
+      {% for category in categories %}
+        <option
+          value="{{ category.id }}"
+          {% if product.category_id == category.id %}
+            selected
+          {% endif %}
+        >
+          {{category.name}}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+</div>
+
+<div class="item">
+  <div>Titre</div>
+  <div>
+    <input
+      class="box-shadow"
+      type="text"
+      name="name"
+      placeholder="Entrez le titre de l'annonce"
+      value="{{ product.name }}"
+    >
+  </div>
+</div>
+
+<div class="item">
+  <div>Description</div>
+  <div>
+    <textarea class="box-shadow" name="description">{{ product.description }}</textarea>
+  </div>
+</div>
+
+<div class="item">
+  <div class="tooltip-container">
+    Photos
+    <div class="tooltip">
+      <i class="material-icons">info</i>
+      <span class="tooltip-text">
+        .png, .jpg ou .jpeg
+      </span>
+    </div>
+  </div>
+  <div>
+    <div id="photos-upload">
+      <input
+        id="photos-input"
+        type="file"
+        name="photos"
+        multiple
+        accept="image/*"
+        onchange="PhotosUpload.handleFileInput(event)"
+      >
+      <p>Sélectionnez jusqu'à 6 photos</p>
+    </div>
+    <div id="photos-preview">
+      {% if files %}
+        {% for image in files %}
+          <div class="photo" id="{{ image.id }}">
+            <img src="{{ image.src }}" alt="{{ image.name }}">
+            <i
+              class="material-icons"
+              onclick="PhotosUpload.removeOldPhoto(event)"
+            >
+              delete_forever
+            </i>
+          </div>
+        {% endfor %}
+        <input type="hidden" name="removed_files">
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="item">
+  <div>Prix</div>
+  <div>
+    <input
+      class="box-shadow"
+      type="text"
+      name="price"
+      placeholder="Prix du produit"
+      value="{{ product.price }}"
+      onkeydown="Mask.apply(this,'formatBRL')"
+    >
+  </div>
+  {% if product.oldPrice %}
+    <input
+      class="box-shadow"
+      type="hidden"
+      name="old_price"
+      value="{{ product.oldPrice}}"
+    >
+  {% endif %}
+</div>
+
+<div class="item">
+  <div>Quantité</div>
+  <div>
+    <input
+      class="box-shadow"
+      type="number"
+      name="quantity"
+      placeholder="Stock disponible"
+      value="{{ product.quantity }}"
+    >
+  </div>
+</div>
+
+{% if (product.status == '1') or (product.status == '0') %}
+  <div class="item">
+    <div>Disponible</div>
+    <div>
+      <span class="status">
+        <input
+          class="box-shadow"
+          type="radio"
+          name="status"
+          value="1"
+          {% if product.status == "1"%}
+            checked
+          {% endif %}
+        >
+        Oui
+      </span>
+      <span class="status">
+        <input
+          class="box-shadow"
+          type="radio"
+          name="status"
+          value="0"
+          {% if product.status == "0"%}
+            checked
+          {% endif %}
+        >
+        Non
+      </span>
+    </div>
+  </div>
+{% endif %}
