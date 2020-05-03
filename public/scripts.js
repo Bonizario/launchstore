@@ -45,8 +45,7 @@ const Mask = {
   cpfCnpj(value) {
     value = value.replace(/\D/g, '');
 
-    if (value.length > 14)
-      value = value.slice(0, -1);
+    if (value.length > 14) value = value.slice(0, -1);
 
     // checking if the input type is cnpj
     if (value.length > 11) {
@@ -81,8 +80,7 @@ const Mask = {
   cep(value) {
     value = value.replace(/\D/g, '');
 
-    if (value.length > 8)
-      value = value.slice(0, -1);
+    if (value.length > 8) value = value.slice(0, -1);
 
     value = value.replace(/(\d{5})(\d)/, '$1-$2');
 
@@ -232,5 +230,59 @@ const Lightbox = {
     Lightbox.target.style.top = '-100%';
     Lightbox.target.style.bottom = 'initial';
     Lightbox.closeButton.style.top = '-80px';
+  },
+};
+
+const Validate = {
+  apply(input, func) {
+    Validate.clearErrors(input);
+
+    let results = Validate[func](input.value);
+    input.value = results.value;
+
+    if (results.error) Validate.displayError(input, results.error);
+  },
+  displayError(input, error) {
+    const div = document.createElement('div');
+    div.classList.add('error');
+    div.innerHTML = error;
+    input.parentNode.appendChild(div);
+    input.focus();
+  },
+  clearErrors(input) {
+    const errorDiv = input.parentNode.querySelector('.error');
+
+    if (errorDiv) errorDiv.remove();
+  },
+  isEmail(value) {
+    let error = null;
+
+    const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+    if (!value.match(mailFormat)) error = 'Adresse électronique invalide';
+
+    return { error, value };
+  },
+  isCpfCnpj(value) {
+    let error = null;
+
+    const cleanValues = value.replace(/\D/g, '');
+
+    if (cleanValues.length > 11 && cleanValues.length !== 14) {
+      error = 'CNPJ invalide';
+    } else if (cleanValues.length < 12 && cleanValues.length !== 11) {
+      error = 'CPF invalide';
+    }
+
+    return { error, value };
+  },
+  isCep(value) {
+    let error = null;
+
+    const cleanValues = value.replace(/\D/g, '');
+
+    if (cleanValues.length !== 8) error = 'CEP invalide';
+
+    return { error, value };
   },
 };

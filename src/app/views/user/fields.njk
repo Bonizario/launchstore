@@ -7,12 +7,13 @@
       name="name"
       placeholder="Veuillez entrer votre nom complet"
       value="{{ user.name }}"
+      required
     >
   </div>
 </div>
 
 <div class="item">
-  <div>Email</div>
+  <div>Adresse Électronique</div>
   <div>
     <input
       class="box-shadow"
@@ -20,6 +21,8 @@
       name="email"
       placeholder="parexample@eee.com"
       value="{{ user.email }}"
+      onblur="Validate.apply(this, 'isEmail')"
+      required
     >
   </div>
 </div>
@@ -33,6 +36,7 @@
       name="password"
       placeholder="Veuillez entrer un mot de passe sécurisé"
       value="{{ user.password }}"
+      required
     >
   </div>
 </div>
@@ -47,6 +51,7 @@
       name="passwordRepeat"
       placeholder="Veuillez rentrer le mot de passe"
       value="{{ user.password }}"
+      required
     >
   </div>
 </div>
@@ -62,7 +67,9 @@
       placeholder="Veuillez entrez votre document"
       value="{{ user.cpf_cnpj }}"
       onkeydown="Mask.apply(this, 'cpfCnpj')"
+      onblur="Validate.apply(this, 'isCpfCnpj')"
       maxlength="18"
+      required
     >
   </div>
 </div>
@@ -77,7 +84,9 @@
       placeholder="Par example: 12345-678"
       value="{{ user.cep }}"
       onkeydown="Mask.apply(this, 'cep')"
+      onblur="Validate.apply(this, 'isCep')"
       maxlength="9"
+      required
     >
   </div>
 </div>
@@ -91,6 +100,7 @@
       name="address"
       placeholder="Veuillez entrez votre adresse complète"
       value="{{ user.address }}"
+      required
     >
   </div>
 </div>

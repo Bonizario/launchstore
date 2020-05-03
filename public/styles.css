@@ -622,3 +622,10 @@ form .item #photos-preview .photo:hover i {
 .user-register.container.form {
   max-width: 500px;
 }
+
+.item .error {
+  background-color: #e74c3c;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #fff;
+}
