@@ -64,7 +64,7 @@ module.exports = {
       }));
 
       return res.render('products/show', { product, files });
-    } catch(err) {
+    } catch (err) {
       console.error(err);
     }
   },
@@ -91,7 +91,7 @@ module.exports = {
       }));
 
       return res.render('products/edit', { product, categories, files });
-    } catch(err) {
+    } catch (err) {
       console.error(err);
     }
   },
@@ -132,7 +132,7 @@ module.exports = {
       await Product.update(req.body);
 
       return res.redirect(`/products/${req.body.id}`);
-    } catch(err) {
+    } catch (err) {
       console.error(err);
     }
   },
@@ -141,7 +141,7 @@ module.exports = {
       await Product.delete(req.body.id);
 
       return res.redirect('/products/create');
-    } catch(err) {
+    } catch (err) {
       console.error(err);
     }
   },
