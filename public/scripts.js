@@ -1,23 +1,46 @@
 const Mask = {
-  apply(input, func) {
-    setTimeout(() => {
-      input.value = Mask[func](input.value);
-    }, 1);
+  setCaretPosition(input, caretPos) {
+    input.value = input.value;
+    // ^ this is used to not only get "focus", but
+    // to make sure it doesn't have everything -selected-
+    // (it causes an issue in chrome, and having it doesn't hurt any other browser)
+    if (input !== null) {
+      if (input.createTextRange) {
+        let range = input.createTextRange();
+        range.move('character', caretPos);
+        range.select();
+        return true;
+      } else {
+        // (input.selectionStart === 0 added for Firefox bug)
+        if (input.selectionStart || input.selectionStart === 0) {
+          input.focus();
+          input.setSelectionRange(caretPos, caretPos);
+          return true;
+        } else {
+          input.focus();
+          console.log('kfdsk')
+          return false;
+        }
+      }
+    }
   },
-  formatBRL(value) {
-    value = value.replace(/\D/g, '');
-
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(value / 100);
+  apply(input, func) {
+    if (input.name === 'price')
+      setTimeout(() => {
+        input.value = Mask[func](input.value);
+        Mask.setCaretPosition(input, input.value.length - 2);
+      }, 1);
+    else
+      setTimeout(() => {
+        input.value = Mask[func](input.value);
+      }, 1);
   },
   formatEUR(value) {
     value = value.replace(/\D/g, '');
 
     return new Intl.NumberFormat('fr-FR', {
       style: 'currency',
-      currency: 'EUR'
+      currency: 'EUR',
     }).format(value / 100);
   },
 };
@@ -53,7 +76,7 @@ const PhotosUpload = {
   },
   hasLimit(event) {
     const { uploadLimit, input, preview } = PhotosUpload;
-    const { files: fileList} = input;
+    const { files: fileList } = input;
 
     if (fileList.length > uploadLimit) {
       alert(`Upload a maximum of ${uploadLimit} photos!`);
@@ -70,7 +93,9 @@ const PhotosUpload = {
 
     const totalPhotos = fileList.length + photosDiv.length;
     if (totalPhotos > uploadLimit) {
-      alert(`You have reached the maximum upload limit! (${uploadLimit} photos)`);
+      alert(
+        `You have reached the maximum upload limit! (${uploadLimit} photos)`
+      );
       event.preventDefault();
       return true;
     }
@@ -100,7 +125,7 @@ const PhotosUpload = {
   getRemoveButton() {
     const button = document.createElement('i');
     button.classList.add('material-icons');
-    button.innerHTML = "delete_forever";
+    button.innerHTML = 'delete_forever';
     return button;
   },
   removePhoto(event) {
@@ -122,7 +147,6 @@ const PhotosUpload = {
         'input[name="removed_files"]'
       );
       if (removedFiles) removedFiles.value += `${photoDiv.id},`;
-
     }
 
     photoDiv.remove();
@@ -132,7 +156,9 @@ const PhotosUpload = {
 const ImageGallery = {
   highlight: document.querySelector('.gallery .highlight > img'),
   previews: document.querySelectorAll('.gallery-preview img'),
-  lightboxHighlight: document.querySelector('.gallery .highlight .lightbox-target > img'),
+  lightboxHighlight: document.querySelector(
+    '.gallery .highlight .lightbox-target > img'
+  ),
   setImage(e) {
     const { target } = e;
 

@@ -86,7 +86,8 @@
       name="price"
       placeholder="Prix du produit"
       value="{{ product.price }}"
-      onkeydown="Mask.apply(this,'formatBRL')"
+      maxlength="16"
+      onkeydown="Mask.apply(this, 'formatEUR')"
     >
   </div>
   {% if product.oldPrice %}
