@@ -617,3 +617,8 @@ form .item #photos-preview .photo:hover i {
   color: #000;
   font-weight: 700;
 }
+
+/* === USER REGISTER FORM === */
+.user-register.container.form {
+  max-width: 500px;
+}
