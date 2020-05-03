@@ -61,6 +61,8 @@
       name="cpf_cnpj"
       placeholder="Veuillez entrez votre document"
       value="{{ user.cpf_cnpj }}"
+      onkeydown="Mask.apply(this, 'cpfCnpj')"
+      maxlength="18"
     >
   </div>
 </div>
@@ -74,6 +76,8 @@
       name="cep"
       placeholder="Par example: 12345-678"
       value="{{ user.cep }}"
+      onkeydown="Mask.apply(this, 'cep')"
+      maxlength="9"
     >
   </div>
 </div>

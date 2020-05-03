@@ -1,4 +1,23 @@
 const Mask = {
+  apply(input, func) {
+    if (input.name === 'price')
+      setTimeout(() => {
+        input.value = Mask[func](input.value);
+        Mask.setCaretPosition(input, input.value.length - 2);
+      }, 1);
+    else
+      setTimeout(() => {
+        input.value = Mask[func](input.value);
+      }, 1);
+  },
+  formatEUR(value) {
+    value = value.replace(/\D/g, '');
+
+    return new Intl.NumberFormat('fr-FR', {
+      style: 'currency',
+      currency: 'EUR',
+    }).format(value / 100);
+  },
   setCaretPosition(input, caretPos) {
     input.value = input.value;
     // ^ this is used to not only get "focus", but
@@ -18,30 +37,56 @@ const Mask = {
           return true;
         } else {
           input.focus();
-          console.log('kfdsk')
           return false;
         }
       }
     }
   },
-  apply(input, func) {
-    if (input.name === 'price')
-      setTimeout(() => {
-        input.value = Mask[func](input.value);
-        Mask.setCaretPosition(input, input.value.length - 2);
-      }, 1);
-    else
-      setTimeout(() => {
-        input.value = Mask[func](input.value);
-      }, 1);
-  },
-  formatEUR(value) {
+  cpfCnpj(value) {
     value = value.replace(/\D/g, '');
 
-    return new Intl.NumberFormat('fr-FR', {
-      style: 'currency',
-      currency: 'EUR',
-    }).format(value / 100);
+    if (value.length > 14)
+      value = value.slice(0, -1);
+
+    // checking if the input type is cnpj
+    if (value.length > 11) {
+      // 11222333444455
+
+      // 11.222333444455
+      value = value.replace(/(\d{2})(\d)/, '$1.$2');
+
+      // 11.222.333444455
+      value = value.replace(/(\d{3})(\d)/, '$1.$2');
+
+      // 11.222.333/444455
+      value = value.replace(/(\d{3})(\d)/, '$1/$2');
+
+      // 11.222.333/4444-55
+      value = value.replace(/(\d{4})(\d)/, '$1-$2');
+    } else {
+      // 11122233344
+
+      // 111.22233344
+      value = value.replace(/(\d{3})(\d)/, '$1.$2');
+
+      // 111.222.33344
+      value = value.replace(/(\d{3})(\d)/, '$1.$2');
+
+      // 111.222.333-44
+      value = value.replace(/(\d{3})(\d)/, '$1-$2');
+    }
+
+    return value;
+  },
+  cep(value) {
+    value = value.replace(/\D/g, '');
+
+    if (value.length > 8)
+      value = value.slice(0, -1);
+
+    value = value.replace(/(\d{5})(\d)/, '$1-$2');
+
+    return value;
   },
 };
 
