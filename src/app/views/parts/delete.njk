@@ -1,0 +1,23 @@
+{% macro delete(message) %}
+{% if message %}
+<script>
+  const formDelete = document.querySelector('.form-delete');
+  formDelete.addEventListener('submit', event => {
+    const confirmation = confirm({{ message }});
+    if (!confirmation) {
+      event.preventDefault();
+    }
+  });
+</script>
+{% else %}
+<script>
+  const formDelete = document.querySelector('.form-delete');
+  formDelete.addEventListener('submit', event => {
+    const confirmation = confirm('Voulez-vous vraiment supprimer ?');
+    if (!confirmation) {
+      event.preventDefault();
+    }
+  });
+</script>
+{% endif %}
+{% endmacro %}

@@ -47,32 +47,15 @@ const Mask = {
 
     if (value.length > 14) value = value.slice(0, -1);
 
-    // checking if the input type is cnpj
     if (value.length > 11) {
-      // 11222333444455
-
-      // 11.222333444455
-      value = value.replace(/(\d{2})(\d)/, '$1.$2');
-
-      // 11.222.333444455
-      value = value.replace(/(\d{3})(\d)/, '$1.$2');
-
-      // 11.222.333/444455
-      value = value.replace(/(\d{3})(\d)/, '$1/$2');
-
-      // 11.222.333/4444-55
-      value = value.replace(/(\d{4})(\d)/, '$1-$2');
+      value = value.replace(
+        /(\d{2})(\d{3})(\d{3})(\d{4})(\d)/,
+        '$1.$2.$3/$4-$5'
+      );
     } else {
-      // 11122233344
-
-      // 111.22233344
-      value = value.replace(/(\d{3})(\d)/, '$1.$2');
-
-      // 111.222.33344
-      value = value.replace(/(\d{3})(\d)/, '$1.$2');
-
-      // 111.222.333-44
-      value = value.replace(/(\d{3})(\d)/, '$1-$2');
+      value = value.replace(
+        /(\d{3})(\d{3})(\d{3})(\d)/,
+        '$1.$2.$3-$4');
     }
 
     return value;

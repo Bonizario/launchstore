@@ -1,5 +1,6 @@
-{% extends 'layout.njk' %}
+{% import 'parts/delete.njk' as productConfirm %}
 
+{% extends 'layout.njk' %}
 {% block content %}
 <section class="container form box-shadow">
   <form method="POST" action="/products?_method=PUT" enctype="multipart/form-data">
@@ -25,6 +26,5 @@
   </form>
 </section>
 
-{% include 'delete.njk' %}
-
+{{ productConfirm.delete('Voulez-vous vraiment supprimer ce produit ?') }}
 {% endblock %}

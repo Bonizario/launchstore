@@ -1,0 +1,27 @@
+{% import 'parts/delete.njk' as userConfirm %}
+
+{% extends 'layout.njk' %}
+{% block content %}
+<section class="user-dashboard container form box-shadow">
+  <form method="POST" action="/users?_method=PUT">
+    <div class="header">
+      <h3>Détails</h3>
+    </div>
+    <div class="fields">
+      {% include "user/fields.njk" %}
+      <input
+        type="hidden"
+        name="id"
+        value="{{user.id}}"
+      >
+    </div>
+    <button class="button edit" type="submit">Actualiser</button>
+  </form>
+  <form class="form-delete" action="/users?_method=DELETE" method="POST">
+    <input class="inv" type="hidden" name="id" value="{{user.id}}">
+    <button class="button delete" type="submit">Supprimer</button>
+  </form>
+</section>
+
+{{ userConfirm.delete('Voulez-vous vraiment supprimer votre compte w') }}
+{% endblock %}

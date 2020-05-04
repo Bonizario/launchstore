@@ -34,7 +34,11 @@
       class="box-shadow"
       type="password"
       name="password"
+      {% if not user.id %}
       placeholder="Veuillez entrer un mot de passe sécurisé"
+      {% else %}
+      placeholder="Veuillez confirmez votre mot de passe pour continuer"
+      {% endif %}
       required
     >
   </div>
