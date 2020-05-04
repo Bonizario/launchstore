@@ -19,7 +19,10 @@ module.exports = {
         or: { cpf_cnpj },
       });
 
-      if (user) return res.send('Utilisateur existant !');
+      if (user) return res.render('user/register', {
+        user: req.body,
+        error: 'Utilisateur déjà enregistré',
+      });
 
       if (password != passwordRepeat)
         return res.send('Non concordance des mots de passe !');

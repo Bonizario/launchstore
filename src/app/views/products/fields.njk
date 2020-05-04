@@ -91,12 +91,12 @@
     >
   </div>
   {% if product.oldPrice %}
-    <input
-      class="box-shadow"
-      type="hidden"
-      name="old_price"
-      value="{{ product.oldPrice}}"
-    >
+  <input
+    class="box-shadow"
+    type="hidden"
+    name="old_price"
+    value="{{ product.oldPrice}}"
+  >
   {% endif %}
 </div>
 
@@ -114,33 +114,33 @@
 </div>
 
 {% if (product.status == '1') or (product.status == '0') %}
-  <div class="item">
-    <div>Disponible</div>
-    <div>
-      <span class="status">
-        <input
-          class="box-shadow"
-          type="radio"
-          name="status"
-          value="1"
-          {% if product.status == "1"%}
-            checked
-          {% endif %}
-        >
-        Oui
-      </span>
-      <span class="status">
-        <input
-          class="box-shadow"
-          type="radio"
-          name="status"
-          value="0"
-          {% if product.status == "0"%}
-            checked
-          {% endif %}
-        >
-        Non
-      </span>
-    </div>
+<div class="item">
+  <div>Disponible</div>
+  <div>
+    <span class="status">
+      <input
+        class="box-shadow"
+        type="radio"
+        name="status"
+        value="1"
+        {% if product.status == "1"%}
+          checked
+        {% endif %}
+      >
+      Oui
+    </span>
+    <span class="status">
+      <input
+        class="box-shadow"
+        type="radio"
+        name="status"
+        value="0"
+        {% if product.status == "0"%}
+          checked
+        {% endif %}
+      >
+      Non
+    </span>
   </div>
+</div>
 {% endif %}

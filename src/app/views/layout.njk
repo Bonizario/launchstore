@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="/styles.css"/>
   {% block head %}
-    <title>Launchstore</title>
+  <title>Launchstore</title>
   {% endblock %}
+
+  {% include 'parts/styles.njk' %}
 </head>
 
 <body>
-  {% include "parts/header.njk" %}
+  {% include 'parts/messages.njk' %}
+
+  {% include 'parts/header.njk' %}
 
   {% block content %}{% endblock %}
 
-  {% include "parts/footer.njk" %}
+  {% include 'parts/footer.njk' %}
 </body>
 </html>

@@ -1,6 +1,6 @@
-{% extends "layout.njk" %}
+{% extends 'layout.njk' %}
 
-{% import "parts/section-products.njk" as section %}
+{% import 'parts/section-products.njk' as section %}
 
 {% block content%}
   {{ section.products('Les Derniers Produits', 'container', products) }}
