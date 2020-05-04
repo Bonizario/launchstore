@@ -7,13 +7,7 @@ module.exports = {
   },
   async show(req, res) {
     try {
-      const { userId: id } = req.session;
-
-      const user = await User.findOne({ where: {id} });
-
-      if (!user) return res.render('user/register', {
-        error: 'Utilisateur non trouvé',
-      });
+      const { user } = req;
 
       user.cpf_cnpj = formatCpfCnpj(user.cpf_cnpj);
       user.cep = formatCep(user.cep);
@@ -32,6 +26,30 @@ module.exports = {
       return res.redirect('/users');
     } catch (err) {
       console.error(err);
+    }
+  },
+  async update(req, res) {
+    try {
+      let { name, email, cpf_cnpj, cep, address } = req.body;
+      cpf_cnpj = cpf_cnpj.replace(/\D/g, '');
+      cep = cep.replace(/\D/g, '');
+
+      await User.update(user.id, {
+        name,
+        email,
+        cpf_cnpj,
+        cep,
+        address,
+      });
+
+      return res.render('user/index', {
+        success: 'Mise à jour réussie',
+      });
+    } catch (err) {
+      console.error(err);
+      return res.render('user/index', {
+        error: "Une erreur inattendue s'est produite",
+      });
     }
   },
 };
