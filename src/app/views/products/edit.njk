@@ -7,7 +7,6 @@
     <div class="header">
       <h3>Modifier un produit</h3>
     </div>
-
     <div class="fields">
       {% include "products/fields.njk" %}
       <input
@@ -16,15 +15,12 @@
         value="{{product.id}}"
       >
     </div>
-
     <button class="button edit" type="submit">Actualiser</button>
   </form>
-
   <form class="form-delete" action="/products?_method=DELETE" method="POST">
     <input class="inv" type="hidden" name="id" value="{{product.id}}">
     <button class="button delete" type="submit">Supprimer</button>
   </form>
 </section>
-
 {{ productConfirm.delete('Voulez-vous vraiment supprimer ce produit ?') }}
 {% endblock %}

@@ -12,16 +12,15 @@
       <input
         type="hidden"
         name="id"
-        value="{{user.id}}"
+        value="{{ user.id }}"
       >
     </div>
     <button class="button edit" type="submit">Actualiser</button>
   </form>
   <form class="form-delete" action="/users?_method=DELETE" method="POST">
-    <input class="inv" type="hidden" name="id" value="{{user.id}}">
+    <input class="inv" type="hidden" name="id" value="{{ user.id }}">
     <button class="button delete" type="submit">Supprimer</button>
   </form>
 </section>
-
 {{ userConfirm.delete('Voulez-vous vraiment supprimer votre compte w') }}
 {% endblock %}

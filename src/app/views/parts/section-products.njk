@@ -3,7 +3,6 @@
   {% if name %}
   <h2>{{ name }}</h2>
   {% endif %}
-
   <div class="items">
   {% for product in products %}
     <div class="product">
@@ -17,7 +16,6 @@
       {% endif %}
       <p>{{ product.price }}</p>
       <h4>{{ product.name }}</h4>
-
       <a href="/products/{{ product.id }}" class="button">Acheter</a>
     </div>
   {% endfor %}
