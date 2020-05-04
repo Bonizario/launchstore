@@ -4,7 +4,16 @@ module.exports = {
   registerForm(req, res) {
     return res.render('user/register');
   },
+  show(req, res) {
+    return res.send('Ok, enregistrement succédée');
+  },
   async post(req, res) {
-    return res.send('Ok!');
+    try {
+      const userId = await User.create(req.body);
+
+      return res.redirect('/users');
+    } catch (err) {
+      console.error(err);
+    }
   },
 };
