@@ -6,7 +6,10 @@ module.exports = {
 
     for (let key of keys) {
       if (req.body[key] == '')
-        return res.send('Veuillez entrer tous les champs !');
+        return res.render('user/register', {
+          user: req.body,
+          error: 'Veuillez entrer tous les champs',
+        });
     }
 
     let { email, cpf_cnpj, password, passwordRepeat } = req.body;
@@ -25,7 +28,10 @@ module.exports = {
       });
 
       if (password != passwordRepeat)
-        return res.send('Non concordance des mots de passe !');
+        return res.render('user/register', {
+          user: req.body,
+          error: 'Non concordance des mots de passe',
+        });
 
     } catch (err) {
       console.error(err);

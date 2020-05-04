@@ -4,8 +4,8 @@
   --primary-color-hover: hsl(32, 98%, 46%);
   --secondary-color: hsl(217, 100%, 56%);
   --secondary-color-hover: hsl(217, 100%, 46%);
-  --tertiary-color: hsl(320, 96%, 33%);
-  --tertiary-color-hover: hsl(320, 96%, 23%);
+  --tertiary-color: hsl(0, 78%, 57%);
+  --tertiary-color-hover: hsl(0, 78%, 47%);
 }
 
 /* === DEFAULT CSS RESETS/CONFIGS === */
