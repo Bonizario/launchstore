@@ -37,6 +37,6 @@
   background-color: hsl(0, 78%, 57%);
 }
 
-.messages.error {
+.messages.success {
   background-color: hsl(84, 72%, 42%);
 }

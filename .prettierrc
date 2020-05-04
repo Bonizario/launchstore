@@ -1,6 +1,0 @@
-{
-  "prettier.endOfLine": "lf",
-  "prettier.arrowParens": "avoid",
-  "prettier.printWidth": 80,
-  "prettier.singleQuote": true
-}
