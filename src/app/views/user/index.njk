@@ -5,7 +5,7 @@
 <section class="user-dashboard container form box-shadow">
   <form method="POST" action="/users?_method=PUT">
     <div class="header">
-      <h3>Détails</h3>
+      <h3>Votre compte</h3>
     </div>
     <div class="fields">
       {% include "user/fields.njk" %}
@@ -15,7 +15,7 @@
         value="{{ user.id }}"
       >
     </div>
-    <button class="button edit" type="submit">Actualiser</button>
+    <button class="button edit" type="submit">Mettre à jour</button>
   </form>
   <form class="form-delete" action="/users?_method=DELETE" method="POST">
     <input class="inv" type="hidden" name="id" value="{{ user.id }}">

@@ -1,24 +1,22 @@
 <div class="item">
-  <div>Nom complet</div>
+  <div>Votre nom complet</div>
   <div>
     <input
       class="box-shadow"
       type="text"
       name="name"
-      placeholder="Veuillez entrer votre nom complet"
       value="{{ user.name }}"
       required
     >
   </div>
 </div>
 <div class="item">
-  <div>Adresse Électronique</div>
+  <div>E-mail</div>
   <div>
     <input
       class="box-shadow"
       type="email"
       name="email"
-      placeholder="parexample@eee.com"
       value="{{ user.email }}"
       onblur="Validate.apply(this, 'isEmail')"
       required
@@ -33,9 +31,9 @@
       type="password"
       name="password"
       {% if not user.id %}
-      placeholder="Veuillez entrer un mot de passe sécurisé"
+      placeholder="Au moins 6 caractères"
       {% else %}
-      placeholder="Veuillez confirmez votre mot de passe pour continuer"
+      placeholder="Confirmez votre mot de passe pour continuer"
       {% endif %}
       required
     >
@@ -43,26 +41,24 @@
 </div>
 {% if not user.id %}
 <div class="item">
-  <div>Répéter le mot de passe</div>
+  <div>Entrez le mot de passe à nouveau</div>
   <div>
     <input
       class="box-shadow"
       type="password"
       name="passwordRepeat"
-      placeholder="Veuillez rentrer le mot de passe"
       required
     >
   </div>
 </div>
 {% endif %}
 <div class="item">
-  <div>CPF ou CNPJ</div>
+  <div>CPF/CNPJ</div>
   <div>
     <input
       class="box-shadow"
       type="text"
       name="cpf_cnpj"
-      placeholder="Veuillez entrez votre document"
       value="{{ user.cpf_cnpj }}"
       onkeydown="Mask.apply(this, 'cpfCnpj')"
       onblur="Validate.apply(this, 'isCpfCnpj')"
@@ -78,7 +74,6 @@
       class="box-shadow"
       type="text"
       name="cep"
-      placeholder="Par example: 12345-678"
       value="{{ user.cep }}"
       onkeydown="Mask.apply(this, 'cep')"
       onblur="Validate.apply(this, 'isCep')"
@@ -88,13 +83,12 @@
   </div>
 </div>
 <div class="item">
-  <div>Adresse complète</div>
+  <div>Votre adresse complète</div>
   <div>
     <input
       class="box-shadow"
       type="text"
       name="address"
-      placeholder="Veuillez entrez votre adresse complète"
       value="{{ user.address }}"
       required
     >

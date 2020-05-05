@@ -1,0 +1,26 @@
+<div class="item">
+  <div>Adresse e-mail</div>
+  <div>
+    <input
+      class="box-shadow"
+      type="email"
+      name="email"
+      value="{{ user.email }}"
+      onblur="Validate.apply(this, 'isEmail')"
+      required
+    >
+  </div>
+</div>
+{# Vous possédez déjà un compte ? Identifiez-vous #}
+<div class="item">
+  <div>Mot de passe</div>
+  <div>
+    <input
+      class="box-shadow"
+      type="password"
+      name="password"
+      placeholder="Au moins 6 caractères"
+      required
+    >
+  </div>
+</div>
