@@ -68,25 +68,25 @@ module.exports = {
     try {
       const fillAllFields = checkAllFields(req.body);
       if (fillAllFields)
-      return res.render('user/index', fillAllFields);
+        return res.render('user/index', fillAllFields);
 
       const { id, password } = req.body;
       if (!password)
-      return res.render('user/index', {
-        user: req.body,
-        error:
-        'Veuillez entrer votre mot de passe pour mettre à jour vos informations',
-      });
+        return res.render('user/index', {
+          user: req.body,
+          error:
+          'Veuillez entrer votre mot de passe pour mettre à jour vos informations',
+        });
 
       const user = await User.findOne({ where: { id } });
 
       const passed = await compare(password, user.password);
 
       if (!passed)
-      return res.render('user/index', {
-        user: req.body,
-        error: 'Mot de passe invalide',
-      });
+        return res.render('user/index', {
+          user: req.body,
+          error: 'Mot de passe invalide',
+        });
 
       req.user = user;
       next();

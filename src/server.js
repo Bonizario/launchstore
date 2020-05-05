@@ -7,6 +7,11 @@ const routes = require('./routes');
 const server = express();
 
 server.use(session);
+server.use((req, res, next) => {
+  res.locals.session = req.session; // global variable session
+  next();
+});
+
 server.use(express.urlencoded({ extended: true }));
 server.use(express.static('public'));
 server.use(methodOverride('_method')); /* must be above routes */
