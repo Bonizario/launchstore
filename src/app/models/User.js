@@ -1,5 +1,7 @@
-const db = require('../../config/db');
+const fs = require('fs');
 const { hash } = require('bcryptjs');
+const db = require('../../config/db');
+const Product = require('../models/Product');
 
 module.exports = {
   async findOne(filters) {
@@ -60,7 +62,7 @@ module.exports = {
       let query = 'UPDATE users SET';
 
       Object.keys(fields).map((key, index, array) => {
-        if ((index + 1) < array.length) {
+        if (index + 1 < array.length) {
           query = `${query}
           ${key} = '${fields[key]}',
           `;
@@ -74,6 +76,35 @@ module.exports = {
 
       await db.query(query);
       return;
+    } catch (err) {
+      console.error(err);
+    }
+  },
+  async delete(id) {
+    try {
+      let results = await db.query(
+        'SELECT * FROM products WHERE user_id = $1',
+        [id]
+      );
+      const products = results.rows;
+
+      const allFilesPromise = products.map(product =>
+        Product.files(product.id)
+      );
+
+      let promiseResults = await Promise.all(allFilesPromise);
+
+      await db.query('DELETE FROM users WHERE id = $1', [id]);
+
+      promiseResults.map(results => {
+        results.rows.map(file => {
+          try {
+            fs.unlinkSync(file.path);
+          } catch (err) {
+            console.error(err);
+          }
+        });
+      });
     } catch (err) {
       console.error(err);
     }

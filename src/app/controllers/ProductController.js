@@ -27,7 +27,7 @@ module.exports = {
       if (req.files.length == 0)
         return res.send('Veuillez insérer au moins une image !');
 
-      req.body.user_id = req.session.userId; // user_id undefined error
+      req.body.user_id = req.session.userId;
 
       const results = await Product.create(req.body);
       const productId = results.rows[0].id;
@@ -131,7 +131,6 @@ module.exports = {
         req.body.old_price = oldProduct.rows[0].price;
       }
 
-      req.body.user_id = req.session.userId; // user_id undefined error
       await Product.update(req.body);
 
       return res.redirect(`/products/${req.body.id}`);
