@@ -63,7 +63,7 @@ module.exports = {
   async reset(req, res) {
     try {
       const user = req.user;
-      const { password, token } = req.body;
+      const { password } = req.body;
       const newPassword = await hash(password, 8);
       await User.update(user.id, {
         password: newPassword,
@@ -76,6 +76,7 @@ module.exports = {
         success: 'Votre mot de passe a été changé avec succès !',
       });
     } catch (err) {
+      const { token } = req.body;
       console.error(err);
       return res.render('session/password-reset', {
         user: req.body,
