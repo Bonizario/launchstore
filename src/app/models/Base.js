@@ -1,9 +1,9 @@
 const db = require('../../config/db');
 
 function find(filters, table) {
-  try {
-    let query = `SELECT * FROM ${table}`;
+  let query = `SELECT * FROM ${table}`;
 
+  if (filters) {
     Object.keys(filters).map(key => {
       query += ` ${key}`;
 
@@ -11,11 +11,9 @@ function find(filters, table) {
         query += ` ${field}='${filters[key][field]}'`;
       });
     });
-
-    return db.query(query);
-  } catch (err) {
-    throw new Error(err);
   }
+
+  return db.query(query);
 }
 
 const Base = {
@@ -32,7 +30,7 @@ const Base = {
 
       return results.rows[0];
     } catch (err) {
-      throw new Error(err);
+      console.error(err);
     }
   },
   async findOne(filters) {
@@ -41,7 +39,7 @@ const Base = {
 
       return results.rows[0];
     } catch (err) {
-      throw new Error(err);
+      console.error(err);
     }
   },
   async findAll(filters) {
@@ -50,7 +48,7 @@ const Base = {
 
       return results.rows;
     } catch (err) {
-      throw new Error(err);
+      console.error(err);
     }
   },
   async create(fields) {
@@ -73,28 +71,24 @@ const Base = {
       return results.rows[0].id;
     }
     catch (err) {
-      throw new Error(err);
+      console.error(err);
     }
   },
   update(id, fields) {
-    try {
-      let update = [];
+    let update = [];
 
-      Object.keys(fields).map(key => {
-        const line = `${key} = '${fields[key]}'`;
-        update.push(line);
-      });
+    Object.keys(fields).map(key => {
+      const line = `${key} = '${fields[key]}'`;
+      update.push(line);
+    });
 
-      let query = `
-      UPDATE ${this.table}
-      SET ${update.join(',')}
-      WHERE id = ${id}
-      `;
+    let query = `
+    UPDATE ${this.table}
+    SET ${update.join(',')}
+    WHERE id = ${id}
+    `;
 
-      return db.query(query);
-    } catch (err) {
-      throw new Error(err);
-    }
+    return db.query(query);
   },
   delete(id) {
     return db.query(`DELETE FROM ${this.table} WHERE id = $1`, [id]);

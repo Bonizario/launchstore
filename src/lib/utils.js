@@ -8,9 +8,8 @@ module.exports = {
     const hour = date.getHours();
     const minutes = date.getMinutes();
 
-    let hourAndMinutes;
+    let hourAndMinutes = `${hour}h${minutes}`;
     if (minutes < 10) hourAndMinutes = `${hour}h0${minutes}`;
-    else hourAndMinutes = `${hour}h${minutes}`;
 
     return {
       day,
