@@ -1,4 +1,9 @@
 node_modules
-docs
+
+# postgresql queries
+docs/*
+!docs/database.sql
+
+# products images
 public/images/*
 !public/images/.gitkeep
