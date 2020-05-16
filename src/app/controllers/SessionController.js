@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const { hash } = require('bcryptjs');
 const User = require('../models/User');
 const mailer = require('../../lib/mailer');
 
@@ -46,11 +47,39 @@ module.exports = {
       });
 
       return res.render('session/forgot-password', {
-        success: 'Vérifiez votre adresse e-mail pour réinitialiser votre mot de passe'
+        success:
+          'Vérifiez votre adresse e-mail pour réinitialiser votre mot de passe',
       });
     } catch (err) {
       console.error(err);
       return res.render('session/forgot-password', {
+        error: 'Erreur inattendue, essayez à nouveau dans quelques minutes',
+      });
+    }
+  },
+  resetForm(req, res) {
+    return res.render('session/password-reset', { token: req.query.token });
+  },
+  async reset(req, res) {
+    try {
+      const user = req.user;
+      const { password, token } = req.body;
+      const newPassword = await hash(password, 8);
+      await User.update(user.id, {
+        password: newPassword,
+        reset_token: '',
+        reset_token_expires: '',
+      });
+
+      return res.render('session/login', {
+        user: req.body,
+        success: 'Votre mot de passe a été changé avec succès !',
+      });
+    } catch (err) {
+      console.error(err);
+      return res.render('session/password-reset', {
+        user: req.body,
+        token,
         error: 'Erreur inattendue, essayez à nouveau dans quelques minutes',
       });
     }
