@@ -29,9 +29,8 @@
   color: #fff;
   top: 0;
   opacity: 1;
-
-  animation: showmessage 400ms 0s ease-out forwards, hidemessage 400ms 4s ease-out forwards;;
-} /* fowards faz com que a box fique parada depois de sair de tela */
+  animation: showmessage 400ms 0s ease-out forwards, hidemessage 400ms 4s ease-out forwards;
+}
 
 .messages.error {
   background-color: hsl(0, 78%, 57%);
