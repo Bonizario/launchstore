@@ -41,7 +41,7 @@
 }
 
 .accounts:hover .submenu {
-  top: -8px;
+  top: 24px;
   opacity: 1;
   visibility: initial;
 }

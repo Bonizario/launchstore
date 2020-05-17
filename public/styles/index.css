@@ -171,6 +171,7 @@ header div.container {
 
 header div.container a {
   justify-self: start;
+  padding: 4px;
 }
 
 /* === LOGO === */
@@ -616,11 +617,7 @@ form .item #photos-preview .photo:hover i {
   font-weight: 700;
 }
 
-/* === USER REGISTER FORM === */
-.user-register.container.form {
-  max-width: 500px;
-}
-
+/* === ERROR MESSAGE === */
 .item .error {
   background-color: #e74c3c;
   padding: 4px 8px;
