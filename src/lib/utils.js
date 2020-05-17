@@ -25,10 +25,13 @@ module.exports = {
     };
   },
   formatPrice(price) {
-    return new Intl.NumberFormat('fr-FR', {
+    const posfix =  new Intl.NumberFormat('fr-FR', {
       style: 'currency',
       currency: 'EUR',
     }).format(price / 100);
+    // Node doesn't have other pre-installed formats besides US
+    // 21.55 -> € 21.55 (wrong) 21.55 -> 21.55 € (correct)
+    return `${posfix.slice(2, posfix.length)} ${posfix[0]}`;
   },
   formatCpfCnpj(value) {
     value = value.replace(/\D/g, '');
