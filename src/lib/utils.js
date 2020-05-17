@@ -27,7 +27,7 @@ module.exports = {
   formatPrice(price) {
     return new Intl.NumberFormat('fr-FR', {
       style: 'currency',
-      currency: 'EUR'
+      currency: 'EUR',
     }).format(price / 100);
   },
   formatCpfCnpj(value) {
