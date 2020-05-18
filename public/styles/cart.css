@@ -125,7 +125,37 @@
   font-size: 18px;
 }
 
+/* === EMPTY CART === */
 .cart-empty .button {
   width: 240px;
   margin: 16px auto;
+}
+
+/* === MENU ICON === */
+header div.container {
+  grid-template-columns: 220px auto 315px;
+}
+
+li.cart a {
+  position: relative;
+}
+
+li.cart a span {
+  position: absolute;
+  top: 12px;
+  right: 0px;
+  background-color: var(--tertiary-color);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+li.cart a:hover span {
+  background-color: #fff;
+  color: #000;
 }
