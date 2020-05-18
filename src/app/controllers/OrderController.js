@@ -1,10 +1,10 @@
 const User = require('../models/User');
 const Order = require('../models/Order');
 const LoadProductService = require('../services/LoadProductService');
+const LoadOrderService = require('../services/LoadOrderService');
 const mailer = require('../../lib/mailer');
 const EmailTemplate = require('../services/EmailTemplate');
 const Cart = require('../../lib/cart');
-const { formatPrice, date } = require('../../lib/utils');
 
 const email = (seller, product, buyer) =>
   EmailTemplate.header() +
@@ -29,43 +29,37 @@ const email = (seller, product, buyer) =>
 
 module.exports = {
   async index(req, res) {
-    let orders = await Order.findAll({
-      where: { buyer_id: req.session.userId },
-    });
-
-    const getOrdersPromise = orders.map(async order => {
-      order.product = await LoadProductService.load('product', {
-        where: { id: order.product_id },
+    try {
+      const orders = await LoadOrderService.load('orders', {
+        where: { buyer_id: req.session.userId },
       });
 
-      order.buyer = await User.findOne({
-        where: { id: order.buyer_id },
+      return res.render('orders/index', { orders });
+    } catch (err) {
+      console.error(err);
+    }
+  },
+  async sales(req, res) {
+    try {
+      const sales = await LoadOrderService.load('orders', {
+        where: { seller_id: req.session.userId },
       });
 
-      order.seller = await User.findOne({
-        where: { id: order.seller_id },
+      return res.render('orders/sales', { sales });
+    } catch (err) {
+      console.error(err);
+    }
+  },
+  async show(req, res) {
+    try {
+      const order = await LoadOrderService.load('order', {
+        where: { id: req.params.id },
       });
 
-      order.formattedPrice = formatPrice(order.price);
-      order.formattedTotal = formatPrice(order.total);
-
-      const statuses = {
-        open: 'Ouvert',
-        sold: 'Vendu',
-        canceled: 'Annulé',
-      };
-
-      order.formattedStatus = statuses[order.status];
-
-      const updatedAt = date(order.updated_at);
-      order.formattedUpdatedAt = `${order.formattedStatus} le ${updatedAt.dayAndMonth}/${updatedAt.year} à ${updatedAt.hourAndMinutes}`;
-
-      return order;
-    });
-
-    orders = await Promise.all(getOrdersPromise);
-
-    return res.render('orders/index', { orders });
+      return res.render('orders/details', { order });
+    } catch (err) {
+      console.error(err);
+    }
   },
   async post(req, res) {
     try {

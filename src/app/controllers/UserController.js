@@ -118,12 +118,16 @@ module.exports = {
     }
   },
   async ads(req, res) {
-    const products = await LoadProductService.load('products', {
-      where: {
-        user_id: req.session.userId,
-      },
-    });
+    try {
+      const products = await LoadProductService.load('products', {
+        where: {
+          user_id: req.session.userId,
+        },
+      });
 
-    return res.render('user/ads', { products });
+      return res.render('user/ads', { products });
+    } catch (err) {
+      console.error(err);
+    }
   },
 };

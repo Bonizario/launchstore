@@ -4,7 +4,7 @@
 {% block content %}
 {% if (orders.length < 1) %}
 {% call card.render('', 'cart-empty large container') %}
-<p>Vous n'avez aucune demande</p>
+<p>Vous n'avez pas de demandes</p>
 <a href="/products/search" class="button">Acheter maintenant</a>
 {% endcall %}
 {% else %}
