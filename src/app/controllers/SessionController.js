@@ -36,10 +36,20 @@ module.exports = {
         to: user.email,
         from: 'no-reply@launchstore.com.br',
         subject: 'Recuperação de senha',
-        html: `<h2>Vous avez perdu vos clés ?</h2>
+        html: `
+        <style>* { font-family: sans-serif; } header { text-align: center; margin-bottom: 12px; padding: 16px; }</style>
+        <header style="background-color: #000;">
+          <h1 style="color: #fff; font-size: 36px; line-height: 46px; margin: 0;">
+            Launchstore
+          </h1>
+          <h2 style="color: #fd9621; text-transform: uppercase; font-size: 14px; line-height: 16px; letter-spacing: 2px; margin: 0;">
+            Acheter et vendre
+          </h2>
+        </header>
+        <h2>Vous avez perdu votre mot de passe ?</h2>
         <p>Pas de soucis, cliquez sur le lien ci-dessous pour récupérer votre mot de passe</p>
         <p>
-        <a href="http://localhost:3000/users/password-reset?token=${token}" target="_blank">
+        <a href="http://localhost:3000/users/password-reset?token=${token}" target="_blank" style="color: #fd9621; font-weight: 700;">
         RÉCUPÉRER VOTRE MOT DE PASSE
         </a>
         </p>

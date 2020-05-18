@@ -4,8 +4,8 @@
   --primary-color-hover: hsl(32, 98%, 46%);
   --secondary-color: hsl(217, 100%, 56%);
   --secondary-color-hover: hsl(217, 100%, 46%);
-  --tertiary-color: hsl(353, 98%, 41%);
-  --tertiary-color-hover: hsl(353, 98%, 31%);
+  --tertiary-color: hsl(353, 98%, 44%);
+  --tertiary-color-hover: hsl(353, 98%, 38%);
 }
 
 /* === DEFAULT CSS RESETS/CONFIGS === */
@@ -47,6 +47,7 @@ input, select, textarea {
 
 button {
   cursor: pointer;
+  background-color: transparent;
 }
 
 input[type=file], /* FF, IE7+, chrome (except button) */
