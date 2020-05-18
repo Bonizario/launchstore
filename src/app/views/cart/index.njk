@@ -2,6 +2,12 @@
 
 {% extends 'layout.njk' %}
 {% block content %}
+{% if (cart.items) and (cart.items.length < 1) %}
+{% call card.render('', 'cart-empty large container') %}
+<p>Votre chariot est vide !</p>
+<a href="/products/search" class="button">Acheter maintenant</a>
+{% endcall %}
+{% else %}
 {% call card.render('Chariot', 'cart large container') %}
 <div class="header">
   <p>Produit</p>
@@ -50,4 +56,5 @@
   </form>
 </div>
 {% endcall %}
+{% endif %}
 {% endblock %}
