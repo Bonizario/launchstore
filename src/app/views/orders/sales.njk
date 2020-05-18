@@ -29,6 +29,25 @@
     <div class="status {{ sale.status }}">
       {{ sale.formattedStatus }}
     </div>
+    <div class="actions dropdown-container">
+      Actions <i class="material-icons">arrow_drop_down</i>
+      <ul class="dropdown box-shadow">
+        <li><a href="/orders/{{ sale.id }}">Voir la demande</a></li>
+        <li><a href="/products/{{ sale.product.id }}/edit">Modifier la demande</a></li>
+        {% if (sale.status == 'open') %}
+          <li>
+            <form action="/orders/{{ sale.id }}/close" method="POST">
+              <button>Produit vendu</button>
+            </form>
+          </li>
+          <li>
+            <form action="/orders/{{ sale.id }}/cancel" method="POST">
+              <button>Demande annulé</button>
+            </form>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
   </div>
   {% endfor %}
 </div>
