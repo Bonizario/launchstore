@@ -51,6 +51,15 @@ const Base = {
       console.error(err);
     }
   },
+  async findOneWithDeleted(filters) {
+    try {
+      const results = await find(filters, `${this.table}_with_deleted`);
+
+      return results.rows[0];
+    } catch (err) {
+      console.error(err);
+    }
+  },
   async create(fields) {
     try {
       let keys = [],

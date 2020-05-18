@@ -6,7 +6,7 @@ module.exports = {
     try {
       let { filter, category } = req.query;
 
-      if (!filter || filter.toLowerCase() == 'tout le magasin') filter = null;
+      if (!filter || filter.toLowerCase().trim() == 'tout le magasin') filter = null;
 
       let products = await Product.search({ filter, category });
 
