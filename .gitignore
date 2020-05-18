@@ -1,5 +1,8 @@
 node_modules
 
+# debug configs
+.vscode
+
 # postgresql queries
 docs/*
 !docs/database.sql
