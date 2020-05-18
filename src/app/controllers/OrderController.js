@@ -119,4 +119,34 @@ module.exports = {
       return res.render('orders/error');
     }
   },
+  async update(req, res) {
+    try {
+      const { id, action } = req.params;
+
+      const acceptedActions = ['close', 'cancel'];
+      if (!acceptedActions.includes(action))
+        return res.render('orders/sales', { error:'Vous ne pouvez pas faire cette action !' });
+
+      const order = await Order.findOne({ where: { id } });
+      if (!order) return res.render('orders/sales', { error:'Demande non trouvé !' });
+
+      if (order.status != 'open')
+        return res.render('orders/sales', { error:'Vous ne pouvez pas faire cette action !' });
+
+      const statuses = {
+        close: 'sold',
+        cancel: 'canceled',
+      };
+
+      order.status = statuses[action];
+
+      await Order.update(id, {
+        status: order.status,
+      });
+
+      return res.redirect('/orders/sales');
+    } catch (err) {
+      console.error(err);
+    }
+  },
 };
