@@ -3,7 +3,6 @@ const routes = express.Router();
 const SessionController = require('../app/controllers/SessionController');
 const UserController = require('../app/controllers/UserController');
 const UserValidator = require('../app/validators/user');
-const OrderController = require('../app/controllers/OrderController');
 const SessionValidator = require('../app/validators/session');
 const { isLoggedRedirectToUsers, onlyUsers } = require('../app/middlewares/session');
 
@@ -27,6 +26,5 @@ routes.delete('/', onlyUsers, UserController.delete);
 
 // === USER/ADS ===
 routes.get('/ads', onlyUsers, UserController.ads);
-routes.post('/orders', onlyUsers, OrderController.post);
 
 module.exports = routes;

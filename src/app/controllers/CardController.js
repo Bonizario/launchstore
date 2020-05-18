@@ -1,5 +1,4 @@
 const Cart = require('../../lib/cart');
-
 const LoadProductService = require('../services/LoadProductService');
 
 module.exports = {

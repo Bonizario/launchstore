@@ -1,10 +1,8 @@
 const { unlinkSync } = require('fs');
 const { hash } = require('bcryptjs');
-
 const User = require('../models/User');
 const Product = require('../models/Product');
 const LoadProductService = require('../services/LoadProductService');
-
 const { formatCep, formatCpfCnpj } = require('../../lib/utils');
 
 module.exports = {

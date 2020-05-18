@@ -1,18 +1,13 @@
 const User = require('../models/User');
+const Order = require('../models/Order');
 const LoadProductService = require('../services/LoadProductService');
-
 const mailer = require('../../lib/mailer');
+const EmailTemplate = require('../services/EmailTemplate');
+const Cart = require('../../lib/cart');
 
-const email = (seller, product, buyer) => `
-  <style>* { font-family: sans-serif; } header { text-align: center; margin-bottom: 12px; padding: 16px; }</style>
-  <header style="background-color: #000;">
-    <h1 style="color: #fff; font-size: 36px; line-height: 46px; margin: 0;">
-      Launchstore
-    </h1>
-    <h2 style="color: #fd9621; text-transform: uppercase; font-size: 14px; line-height: 16px; letter-spacing: 2px; margin: 0;">
-      Acheter et vendre
-    </h2>
-  </header>
+const email = (seller, product, buyer) =>
+  EmailTemplate.header() +
+  `
   <h2>Salut ${seller.name},</h2>
   <p>Vous avez une nouvelle demande d'achat pour votre produit</p>
   <p>Produit: ${product.name}</p>
@@ -21,7 +16,10 @@ const email = (seller, product, buyer) => `
   <h3>Données d'acheteur</h3>
   <p>Nom complet: ${buyer.name}</p>
   <p>Email: ${buyer.email}</p>
-  <p>Adresse: ${buyer.address} | CEP: ${buyer.cep.slice(0, 5)}-${buyer.cep.slice(5, 8)}</p>
+  <p>Adresse: ${buyer.address} | CEP: ${buyer.cep.slice(
+    0,
+    5
+  )}-${buyer.cep.slice(5, 8)}</p>
   <p><br /><br /></p>
   <p><strong>Contacter l'acheteur pour finaliser la vente !</strong></p>
   <p><br /><br /></p>
@@ -31,22 +29,55 @@ const email = (seller, product, buyer) => `
 module.exports = {
   async post(req, res) {
     try {
-      const product = await LoadProductService.load('product', {
-        where: {
-          id: req.body.id,
-        },
+      const cart = Cart.init(req.session.cart);
+
+      const buyer_id = req.session.userId;
+
+      const filteredItems = cart.items.filter(
+        item => item.product.user_id != buyer_id
+      );
+
+      const createOrdersPromise = filteredItems.map(async item => {
+        let { product, price: total, quantity } = item;
+        const { price, id: product_id, user_id: seller_id } = product;
+        const status = 'open';
+
+        const order = await Order.create({
+          seller_id,
+          buyer_id,
+          product_id,
+          price,
+          total,
+          quantity,
+          status,
+        });
+
+        product = await LoadProductService.load('product', {
+          where: {
+            id: product_id,
+          },
+        });
+
+        const seller = await User.findOne({
+          where: { id: seller_id },
+        });
+
+        const buyer = await User.findOne({ where: { id: buyer_id } });
+
+        await mailer.sendMail({
+          to: seller.email,
+          from: 'no-reply@launchstore.com.br',
+          subject: 'Novo pedido de compra',
+          html: email(seller, product, buyer),
+        });
+
+        return order;
       });
 
-      const seller = await User.findOne({ where: { id: product.user_id } });
+      await Promise.all(createOrdersPromise);
 
-      const buyer = await User.findOne({ where: { id: req.session.userId } })
-
-      await mailer.sendMail({
-        to: seller.email,
-        from: 'no-reply@launchstore.com.br',
-        subject: 'Novo pedido de compra',
-        html: email(seller, product, buyer),
-      });
+      delete req.session.cart;
+      Cart.init();
 
       return res.render('orders/success');
     } catch (err) {
